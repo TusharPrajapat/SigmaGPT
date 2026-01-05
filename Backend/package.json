@@ -1,0 +1,25 @@
+{
+  "name": "sigmagpt",
+  "version": "1.0.0",
+  "description": "SigmaGPT backend API",
+  "license": "ISC",
+  "author": "Tushar",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2",
+    "groq-sdk": "^0.37.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.1",
+    "openai": "^6.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
