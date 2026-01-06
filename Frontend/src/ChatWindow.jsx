@@ -3,6 +3,7 @@ import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { PuffLoader, ScaleLoader } from "react-spinners";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export default function ChatWindow() {
   const {
@@ -40,7 +41,7 @@ export default function ChatWindow() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await fetch(`${API_BASE}/api/chat`, options);
       const res = await response.json();
       console.log(res);
       setReply(res.reply);
