@@ -21,7 +21,7 @@ export default function ChatWindow() {
   const [isOpen, setIsOpen] = useState(false);
   const [showShadow, setShowShadow] = useState(false);
 
-  const chatBodyRef = useRef(null);
+  const chatWindowRef = useRef(null);
 
   const getReply = async () => {
     setLoading(true);
@@ -75,12 +75,12 @@ export default function ChatWindow() {
   };
 
   const handleScroll = () => {
-    if (!chatBodyRef.current) return;
-    setShowShadow(chatBodyRef.current.scrollTop > 0);
+    if (!chatWindowRef.current) return;
+    setShowShadow(chatWindowRef.current.scrollTop > 0);
   };
 
   return (
-    <div className="chatWindow">
+    <div className="chatWindow" ref={chatWindowRef} onScroll={handleScroll}>
       <div className={`navbar ${showShadow ? "shadow" : ""}`}>
         <span>
           SigmaGPT &nbsp;<i className="fa-solid fa-angle-down"></i>
@@ -105,10 +105,15 @@ export default function ChatWindow() {
           </div>
         </div>
       )}
-      <div className="chatBody" ref={chatBodyRef} onScroll={handleScroll}>
+      <div className="chatBody">
         <Chat />
-        {loading && <ScaleLoader color="#fff" />}
       </div>
+
+      {loading && (
+        <div className="loaderRow">
+          <ScaleLoader color="#fff" />
+        </div>
+      )}
 
       <div className="chatInput">
         <div className="inputBox">

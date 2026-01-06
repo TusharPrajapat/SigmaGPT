@@ -6,10 +6,15 @@ import mongoose from "mongoose";
 import chatRoutes from "./routes/chart.js";
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 app.use("/api", chatRoutes);
 
@@ -18,19 +23,26 @@ app.use("/api", chatRoutes);
 //   apiKey: process.env.GROQ_API_KEY,
 // });
 
-app.listen(PORT, () => {
-  console.log(`server running on ${PORT}`);
-  connectDB();
+//Health check Route!
+app.get("/", (req, res) => {
+  res.send("SigmaGPT Backend is running!");
 });
 
-const connectDB = async () => {
+const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URL);
     console.log("Connected with Database!");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   } catch (err) {
-    console.log("Failed to connect with Db", err);
+    console.error("Failed to connect with DB", err);
+    process.exit(1);
   }
 };
+
+startServer();
 
 // app.post("/test", async (req, res) => {
 //   try {
