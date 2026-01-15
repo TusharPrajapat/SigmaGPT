@@ -76,13 +76,15 @@ export default function ChatWindow() {
   };
 
   const handleScroll = () => {
-    if (!chatWindowRef.current) return;
-    setShowShadow(chatWindowRef.current.scrollTop > 0);
+    if (!chatWindowRef.current) {
+      return;
+    }
+    setShowShadow(chatWindowRef.current.scrollTop > 130);
   };
 
   return (
     <div className="chatWindow" ref={chatWindowRef} onScroll={handleScroll}>
-      <div className={`navbar ${showShadow ? "shadow" : ""}`}>
+      <div className={showShadow ? "navbar shadow" : "navbar"}>
         <span>
           SigmaGPT &nbsp;<i className="fa-solid fa-angle-down"></i>
         </span>

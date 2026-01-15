@@ -65,7 +65,7 @@ router.delete("/thread/:threadId", async (req, res) => {
   }
 });
 
-//Chat route (Groq instead of OpenAI)
+//Chat route (Groq)
 router.post("/chat", async (req, res) => {
   const { threadId, message } = req.body;
 
@@ -86,7 +86,7 @@ router.post("/chat", async (req, res) => {
       thread.messages.push({ role: "user", content: message });
     }
 
-    // Groq call (same logic, different provider)
+    // Groq call
     const assistantReply = await getGroqAPIResponse(message);
 
     thread.messages.push({ role: "assistant", content: assistantReply });

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Sidebar from "./Sidebar.jsx";
+import Sidebar from "./SideBar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
