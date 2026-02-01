@@ -4,11 +4,14 @@ import cors from "cors";
 import Groq from "groq-sdk";
 import mongoose from "mongoose";
 import chatRoutes from "./routes/chart.js";
+import authRoutes from "./routes/auth.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -16,12 +19,8 @@ app.use(
   })
 );
 
+app.use("/api/auth", authRoutes);
 app.use("/api", chatRoutes);
-
-//Groq client (replaces OpenAI REST call)
-// const groq = new Groq({
-//   apiKey: process.env.GROQ_API_KEY,
-// });
 
 //Health check Route!
 app.get("/", (req, res) => {
@@ -43,23 +42,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-// app.post("/test", async (req, res) => {
-//   try {
-//     const completion = await groq.chat.completions.create({
-//       model: "llama-3.1-8b-instant", // Free Groq model
-//       messages: [
-//         {
-//           role: "user",
-//           content: req.body.message,
-//         },
-//       ],
-//     });
-
-//     //Same output as tutor
-//     res.send(completion.choices[0].message.content);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });

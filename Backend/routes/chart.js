@@ -1,29 +1,16 @@
 import express from "express";
 import Thread from "../models/Thread.js";
 import getGroqAPIResponse from "../utils/groqai.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// test
-router.post("/test", async (req, res) => {
-  try {
-    const thread = new Thread({
-      threadId: "abc",
-      title: "Testing New Thread2",
-    });
-
-    const response = await thread.save();
-    res.send(response);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Failed to save in DB" });
-  }
-});
-
 // Get all threads
-router.get("/thread", async (req, res) => {
+router.get("/thread", authMiddleware, async (req, res) => {
   try {
-    const threads = await Thread.find({}).sort({ updatedAt: -1 });
+    const threads = await Thread.find({ user: req.user.id }).sort({
+      updatedAt: -1,
+    });
     res.json(threads);
   } catch (err) {
     console.log(err);
@@ -31,11 +18,15 @@ router.get("/thread", async (req, res) => {
   }
 });
 
-router.get("/thread/:threadId", async (req, res) => {
+//Get specific thread
+router.get("/thread/:threadId", authMiddleware, async (req, res) => {
   const { threadId } = req.params;
 
   try {
-    const thread = await Thread.findOne({ threadId });
+    const thread = await Thread.findOne({
+      threadId,
+      user: req.user.id,
+    });
 
     if (!thread) {
       return res.status(404).json({ error: "Thread not found" });
@@ -48,11 +39,15 @@ router.get("/thread/:threadId", async (req, res) => {
   }
 });
 
-router.delete("/thread/:threadId", async (req, res) => {
+//Delete specific thread
+router.delete("/thread/:threadId", authMiddleware, async (req, res) => {
   const { threadId } = req.params;
 
   try {
-    const deletedThread = await Thread.findOneAndDelete({ threadId });
+    const deletedThread = await Thread.findOneAndDelete({
+      threadId,
+      user: req.user.id,
+    });
 
     if (!deletedThread) {
       return res.status(404).json({ error: "Thread not found" });
@@ -66,7 +61,7 @@ router.delete("/thread/:threadId", async (req, res) => {
 });
 
 //Chat route (Groq)
-router.post("/chat", async (req, res) => {
+router.post("/chat", authMiddleware, async (req, res) => {
   const { threadId, message } = req.body;
 
   if (!threadId || !message) {
@@ -74,11 +69,16 @@ router.post("/chat", async (req, res) => {
   }
 
   try {
-    let thread = await Thread.findOne({ threadId });
+    let thread = await Thread.findOne({
+      threadId,
+      user: req.user.id,
+    });
 
+    //user
     if (!thread) {
       thread = new Thread({
         threadId,
+        user: req.user.id,
         title: message,
         messages: [{ role: "user", content: message }],
       });
@@ -86,7 +86,7 @@ router.post("/chat", async (req, res) => {
       thread.messages.push({ role: "user", content: message });
     }
 
-    // Groq call
+    //Ai Groq call
     const assistantReply = await getGroqAPIResponse(message);
 
     thread.messages.push({ role: "assistant", content: assistantReply });

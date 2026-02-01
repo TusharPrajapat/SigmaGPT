@@ -2,7 +2,6 @@
   "engines": {
     "node": ">=18"
   },
-
   "name": "sigmagpt",
   "version": "1.0.0",
   "description": "SigmaGPT backend API",
@@ -15,12 +14,16 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^4.19.2",
+    "express": "^4.22.1",
     "groq-sdk": "^0.37.0",
+    "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.0.0",
-    "mongoose": "^9.1.1"
+    "mongoose": "^9.1.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
