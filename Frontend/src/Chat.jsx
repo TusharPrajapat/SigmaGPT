@@ -38,7 +38,7 @@ export default function Chat() {
       {/* To start new chat */}
       {newChat && <h1>Start a New Chat!</h1>}
       <div className="chats">
-        {/* Taking everuthing except the last one (AI reply) */}
+        {/* Taking everything except the last one (AI reply) */}
         {prevChats?.slice(0, -1).map((chat, idx) => (
           <div
             className={chat.role === "user" ? "userDiv" : "gptDiv"}

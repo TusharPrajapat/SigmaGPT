@@ -1,10 +1,13 @@
 import React, { useEffect, useContext } from "react";
-import "./Sidebar.css";
+import "./SideBar.css";
 import { MyContext } from "./MyContext.jsx";
+import { AuthContext } from "./auth/AuthContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 const API_BASE = import.meta.env.VITE_API_URL;
 
-export default function Sidebar() {
+export default function SideBar() {
+  const { isAuthenticated } = useContext(AuthContext);
+
   const {
     allThreads,
     setAllThreads,
@@ -18,8 +21,14 @@ export default function Sidebar() {
 
   const getAllThreads = async () => {
     try {
-      const response = await fetch(`${API_BASE}/api/thread`);
+      const response = await fetch(`${API_BASE}/api/thread`, {
+        credentials: "include",
+      });
       const res = await response.json();
+      if (!Array.isArray(res)) {
+        setAllThreads([]);
+        return;
+      }
       const filteredData = res.map((thread) => ({
         threadId: thread.threadId,
         title: thread.title,
@@ -32,6 +41,7 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     getAllThreads();
   }, [currThreadId]);
 
@@ -47,7 +57,9 @@ export default function Sidebar() {
     setcurrThreadId(newthreadId);
 
     try {
-      const response = await fetch(`${API_BASE}/api/thread/${newthreadId}`);
+      const response = await fetch(`${API_BASE}/api/thread/${newthreadId}`, {
+        credentials: "include",
+      });
       const res = await response.json();
       console.log(res);
       setPrevChats(res);
@@ -60,13 +72,14 @@ export default function Sidebar() {
     try {
       const response = await fetch(`${API_BASE}/api/thread/${threadId}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const res = await response.json();
       console.log(res);
 
       //updated threads re-render
       setAllThreads((prev) =>
-        prev.filter((thread) => thread.threadId !== threadId)
+        prev.filter((thread) => thread.threadId !== threadId),
       );
 
       if (threadId === currThreadId) {

@@ -2,10 +2,16 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
+import { AuthContext } from "./auth/AuthContext";
+import { logout } from "./services/authService";
+import { useNavigate } from "react-router-dom";
 import { PuffLoader, ScaleLoader } from "react-spinners";
 const API_BASE = import.meta.env.VITE_API_URL;
 
 export default function ChatWindow() {
+  const { setIsAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const {
     prompt,
     setPrompt,
@@ -31,6 +37,7 @@ export default function ChatWindow() {
     console.log("message ", prompt, " threadId ", currThreadId);
     const options = {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -82,6 +89,16 @@ export default function ChatWindow() {
     setShowShadow(chatWindowRef.current.scrollTop > 130);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout(); // clears cookie
+      setIsAuthenticated(false);
+      navigate("/login");
+    } catch (err) {
+      console.log("Logout failed", err);
+    }
+  };
+
   return (
     <div className="chatWindow" ref={chatWindowRef} onScroll={handleScroll}>
       <div className={showShadow ? "navbar shadow" : "navbar"}>
@@ -103,7 +120,7 @@ export default function ChatWindow() {
             <i className="fa-solid fa-cloud-arrow-up"></i>
             &nbsp;&nbsp;UpgradePlan
           </div>
-          <div className="dropDownItem">
+          <div className="dropDownItem" onClick={handleLogout}>
             <i className="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout
           </div>
         </div>

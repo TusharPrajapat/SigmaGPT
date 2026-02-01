@@ -1,0 +1,128 @@
+.signupPage {
+  height: 100vh;
+  background-color: #181818;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SignupBox {
+  width: 30rem;
+  height: 30rem;
+
+  background-color: #212121;
+  border-radius: 20px;
+
+  overflow: auto;
+  overflow-x: hidden;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.signupContent {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.signupHeading {
+  text-align: center;
+  border-radius: 10% 10% 0 0;
+  padding: 20px;
+}
+
+.signupHeading h1 {
+  font-size: 27px;
+  margin-top: 5%;
+  margin-bottom: 16px;
+}
+
+.signupHeading p {
+  margin: 0px 45px;
+  line-height: 1.6;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+}
+
+.signupInputDiv {
+  /* border: 2px solid white; */
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  margin-bottom: 20px;
+}
+
+.signupInputDiv form {
+  padding: 0 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signUp_input {
+  width: 80%;
+  height: 20px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+
+  font-size: 18px;
+
+  color: white;
+  background-color: #2f2f2f;
+
+  cursor: pointer;
+  box-shadow: #181818;
+}
+
+.signUp_input:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background-color: #424242;
+}
+
+.submitBtn {
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+  width: 88%;
+  height: 50px;
+  border-radius: 35px;
+
+  color: black;
+  font-size: large;
+  font-weight: 600;
+  background-color: aliceblue;
+}
+
+.submitBtn:hover {
+  background-color: rgb(151, 244, 180);
+}
+
+.orDiv {
+  /* border: 2px solid white; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+  /* margin-bottom: 20px; */
+}
+
+.orDiv hr {
+  width: 180px;
+}
+
+.paraTag {
+  height: 60px;
+  /* border: 2px solid white; */
+  margin-bottom: 20px;
+}
+
+.paraTag p {
+  margin-left: 120px;
+}

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./App.css";
-import Sidebar from "./SideBar.jsx";
+import SideBar from "./SideBar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
 import { MyContext } from "./MyContext.jsx";
+import { AuthContext } from "./auth/AuthContext";
+import Login from "./auth/Login.jsx";
 import { v1 as uuidv1 } from "uuid";
 
 function App() {
+  const { isAuthenticated } = useContext(AuthContext);
+
   const [prompt, setPrompt] = useState("");
   const [reply, setReply] = useState(null);
   const [currThreadId, setcurrThreadId] = useState(uuidv1());
@@ -28,10 +32,21 @@ function App() {
     setAllThreads,
   };
 
+  //while checking auth
+  if (isAuthenticated === null) {
+    return <p>Loading...</p>;
+  }
+
+  // not logged in
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
+  // logged in -> show chat
   return (
     <div className="app">
       <MyContext.Provider value={providerValue}>
-        <Sidebar />
+        <SideBar />
         <ChatWindow />
       </MyContext.Provider>
     </div>
