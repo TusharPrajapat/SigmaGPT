@@ -3,15 +3,10 @@ import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { AuthContext } from "./auth/AuthContext";
-import { logout } from "./services/authService";
-import { useNavigate } from "react-router-dom";
-import { PuffLoader, ScaleLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 const API_BASE = import.meta.env.VITE_API_URL;
 
 export default function ChatWindow() {
-  const { setIsAuthenticated } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   const {
     prompt,
     setPrompt,
@@ -25,7 +20,8 @@ export default function ChatWindow() {
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenOptions, setIsOpenOptions] = useState(false);
   const [showShadow, setShowShadow] = useState(false);
 
   const chatWindowRef = useRef(null);
@@ -33,6 +29,7 @@ export default function ChatWindow() {
   const getReply = async () => {
     setLoading(true);
     setNewChat(false);
+    // setIsOpenOptions(false);
 
     console.log("message ", prompt, " threadId ", currThreadId);
     const options = {
@@ -61,6 +58,9 @@ export default function ChatWindow() {
   //Append newChat to prevChat
 
   useEffect(() => {
+    setIsOpenOptions(false);
+    setIsOpenMenu(false);
+
     if (prompt && reply) {
       setPrevChats((prevChats) => [
         ...prevChats,
@@ -78,8 +78,14 @@ export default function ChatWindow() {
     setPrompt("");
   }, [reply]);
 
+  const handleOptionsClick = () => {
+    setIsOpenOptions(!isOpenOptions);
+    setIsOpenMenu(false);
+  };
+
   const handleProfileClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpenMenu(!isOpenMenu);
+    setIsOpenOptions(false);
   };
 
   const handleScroll = () => {
@@ -89,39 +95,85 @@ export default function ChatWindow() {
     setShowShadow(chatWindowRef.current.scrollTop > 130);
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout(); // clears cookie
-      setIsAuthenticated(false);
-      navigate("/login");
-    } catch (err) {
-      console.log("Logout failed", err);
-    }
-  };
-
   return (
     <div className="chatWindow" ref={chatWindowRef} onScroll={handleScroll}>
       <div className={showShadow ? "navbar shadow" : "navbar"}>
-        <span>
-          SigmaGPT &nbsp;<i className="fa-solid fa-angle-down"></i>
-        </span>
-        <div className="userIconDiv" onClick={handleProfileClick}>
-          <span className="userIcon">
-            <i className="fa-solid fa-user"></i>
+        <div className="optionsDiv" onClick={handleOptionsClick}>
+          <span style={{ fontWeight: "600" }}>
+            SigmaGPT &nbsp;<i className="fa-solid fa-angle-down"></i>
+          </span>
+        </div>
+        <div className="menu" onClick={handleProfileClick}>
+          <span className="">
+            <i className="fa-solid fa-ellipsis"></i>
           </span>
         </div>
       </div>
-      {isOpen && (
-        <div className="dropDown">
-          <div className="dropDownItem">
-            <i className="fa-solid fa-gear"></i>&nbsp;&nbsp;Settings
+      {isOpenOptions && (
+        <div className="dropDownOptions">
+          <div className="dropDownOption1">
+            <div style={{ margin: "0 5px 0 3px" }}>
+              <i className="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div style={{ margin: "0 18px 0 3px" }}>
+              <h5 style={{ fontSize: "14px", margin: "1px 0 1px 0" }}>
+                ChatGPT Plus
+              </h5>
+              <p
+                style={{
+                  fontSize: "12px",
+                  margin: "1px 0 1px 0",
+                  fontWeight: "550",
+                  color: "#989797",
+                }}
+              >
+                Our smartest model & more
+              </p>
+            </div>
+            <div className="upgradeDiv">Upgrade</div>
           </div>
-          <div className="dropDownItem">
-            <i className="fa-solid fa-cloud-arrow-up"></i>
-            &nbsp;&nbsp;UpgradePlan
+          <div className="dropDownOption2">
+            <div>
+              <h5 style={{ fontSize: "14px", margin: "1px 0 1px 0" }}>
+                ChatGPT 5.2
+              </h5>
+              <p
+                style={{
+                  fontSize: "12px",
+                  margin: "1px 0 1px 0",
+                  color: "#989797",
+                  fontWeight: "550",
+                }}
+              >
+                Flagship model
+              </p>
+            </div>
+            <div>
+              <i className="fa-solid fa-check"></i>
+            </div>
           </div>
-          <div className="dropDownItem" onClick={handleLogout}>
-            <i className="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout
+        </div>
+      )}
+      {isOpenMenu && (
+        <div className="dropDownMenu">
+          <div className="dropDownMenuItem">
+            <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Start a group chat
+          </div>
+          <div className="dropDownMenuItem">
+            <i class="fa-solid fa-thumbtack"></i>
+            &nbsp;&nbsp;Pin chat
+          </div>
+          <div className="dropDownMenuItem">
+            <i class="fa-solid fa-box-archive"></i>
+            &nbsp;&nbsp;Archive
+          </div>
+          <div className="dropDownMenuItem">
+            <i class="fa-solid fa-flag"></i>
+            &nbsp;&nbsp;Report
+          </div>
+          <div className="dropDownMenuItem" style={{ color: "red" }}>
+            <i class="fa-solid fa-trash" style={{ color: "red" }}></i>
+            &nbsp;&nbsp;Delete
           </div>
         </div>
       )}

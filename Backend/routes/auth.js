@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -53,9 +54,13 @@ router.post("/login", async (req, res) => {
     }
 
     //2. create token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
 
     const isProd = process.env.NODE_ENV === "production";
 
@@ -76,6 +81,13 @@ router.post("/login", async (req, res) => {
     console.log(err);
     res.status(500).json({ error: "Login failed" });
   }
+});
+
+//TO FETCH USERNAME
+router.get("/me", authMiddleware, (req, res) => {
+  res.json({
+    name: req.user.name,
+  });
 });
 
 //LOGOUT

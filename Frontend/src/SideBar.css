@@ -1,32 +1,70 @@
 .sidebar {
   background-color: #171717;
   color: #b4b4b4;
+
   height: 100vh;
   width: 320px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: auto;
+
+  overflow: hidden;
 }
 
-button {
+.overflowDiv {
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.headerDiv {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px;
+
   padding: 10px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: solid 0.5px rgba(255, 255, 255, 0.5);
+
+  background-color: #171717;
+}
+
+.logoDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 4px;
+
+  border-radius: 8px;
   cursor: pointer;
 }
 
+.logoDiv:hover {
+  background-color: #323232;
+}
+
 .logo {
-  height: 25px;
-  width: 25px;
-  background-color: #fff;
-  border-radius: 50%;
-  object-fit: cover;
+  height: 35px;
+}
+
+.sidePanelDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+  width: 40px;
+
+  margin-right: 4px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.sidePanelDiv:hover {
+  background-color: #323232;
 }
 
 button span {
@@ -38,8 +76,8 @@ button:hover {
 }
 
 .history {
-  margin: 10px;
-  padding: 10px;
+  /* margin: 10px; */
+  padding: 5px 10px;
   height: 100%;
 
   flex: 1;
@@ -52,24 +90,121 @@ button:hover {
 .history li {
   list-style-type: none;
   cursor: pointer;
-  padding: 2px 5px;
-  margin-bottom: 0.3rem;
+  padding: 1px 5px;
   font-size: 14px;
   border: solid 10px transparent;
   position: relative;
 }
 
 .history li:hover {
-  background-color: rgba(180, 180, 180, 0.05);
+  background-color: #323232;
   border-radius: 10px;
 }
 
 .sign {
-  padding: 10px;
-  margin: 10px;
+  border-top: solid 0.115px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.profile {
+  padding: 2px;
+  display: flex;
+  align-items: center;
+
+  height: 40px;
+
+  margin: 8px 6px;
   font-size: 14px;
-  text-align: center;
-  border-top: solid 0.25px rgba(255, 255, 255, 0.5);
+  padding: 5px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.profile:hover {
+  background-color: #323232;
+}
+
+.userIconDiv {
+  margin: 8px;
+}
+
+.userIcon {
+  height: 25px;
+  width: 25px;
+
+  border-radius: 50%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  background-color: rgb(255, 142, 221);
+}
+
+.dropDownProfile {
+  position: absolute;
+  bottom: 4rem;
+  left: 1rem;
+
+  width: 250px;
+  height: auto;
+  background-color: #323232;
+  padding: 8px 15px;
+
+  border-radius: 15px;
+  text-align: left;
+  z-index: 1000;
+  box-shadow: 0px 2px 8px rgb(0, 0, 0, 0.1);
+}
+
+.dropDownProfileItem {
+  font-size: 14px;
+  margin: 0rem 0rem;
+  padding: 0.8rem 0.8rem;
+  cursor: pointer;
+}
+
+.dropDownProfileItem:hover {
+  background-color: rgba(180, 180, 180, 0.1);
+  border-radius: 10px;
+}
+
+.dropDownProfileItem-profile {
+  padding: 2px;
+  display: flex;
+  align-items: center;
+
+  height: 40px;
+
+  font-size: 14px;
+  padding: 1px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.dropDownProfileItem-profile:hover {
+  background-color: rgba(180, 180, 180, 0.1);
+  border-radius: 10px;
+}
+
+.dropDownProfileItem-help {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 14px;
+  padding: 0.8rem 0.8rem;
+  cursor: pointer;
+}
+
+.dropDownProfileItem-help:hover {
+  background-color: rgba(180, 180, 180, 0.1);
+  border-radius: 10px;
 }
 
 .fa-trash-can {
@@ -90,4 +225,22 @@ button:hover {
 .highlighted {
   background-color: rgba(180, 180, 180, 0.05);
   border-radius: 10px;
+}
+
+.newOptions {
+  margin: 10px;
+}
+
+.newOptionsItems {
+  padding: 10px;
+
+  font-size: 14px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.newOptionsItems:hover {
+  background-color: #323232;
 }

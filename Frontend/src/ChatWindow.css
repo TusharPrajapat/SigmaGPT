@@ -34,22 +34,60 @@
 }
 
 .navbar span {
-  margin: 1rem 2rem;
+  margin: 1rem 1rem;
 }
 
-.userIconDiv {
-  margin: 1rem 2rem;
-}
+.optionsDiv {
+  margin: 10px 10px;
+  height: 35px;
+  width: 150px;
 
-.userIcon {
-  /* background-color: #339cff; */
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 10px;
+}
+
+.optionsDiv:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background-color: #424242;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 35px;
+  width: 40px;
+  margin-right: 2%;
+
+  border-radius: 8px;
+
   cursor: pointer;
+}
+
+.menu:hover {
+  background-color: #424242;
+}
+
+.dropDownMenu {
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+
+  width: 200px;
+  height: auto;
+
+  background-color: #323232;
+  padding: 4px 6px;
+  border-radius: 18px;
+  text-align: left;
+  z-index: 1000;
+  box-shadow: 0px 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 .chatBody {
@@ -69,11 +107,14 @@
 /* Chat Input */
 .chatInput {
   width: 100%;
+
   position: sticky;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   bottom: 0;
   z-index: 10;
   background-color: #212121;
@@ -81,8 +122,10 @@
 
 .inputBox {
   width: 100%;
+
   position: relative;
   max-width: 700px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,9 +137,12 @@ input {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 20px;
   font-size: 0.8rem;
-  border-radius: 14px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px, rgba(0, 0, 0, 0.05) 0 -12px 30px,
-    rgba(0, 0, 0, 0.05) 0 4px 6px, rgba(0, 0, 0, 0.05) 0 12px 3px,
+  border-radius: 25px;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0 54px 55px,
+    rgba(0, 0, 0, 0.05) 0 -12px 30px,
+    rgba(0, 0, 0, 0.05) 0 4px 6px,
+    rgba(0, 0, 0, 0.05) 0 12px 3px,
     rgba(0, 0, 0, 0.05) 0 -3px 5px;
 }
 
@@ -127,27 +173,87 @@ input:focus {
 }
 
 /* DropDown css */
-.dropDown {
+
+/* 1. Options Drop Down */
+.dropDownOptions {
   position: absolute;
-  top: 4rem;
-  right: 4rem;
-  width: 150px;
+  top: 2.8rem;
+  left: 16.5rem;
+
+  width: auto;
+
   background-color: #323232;
-  padding: 0.3rem 0.5rem;
-  border-radius: 6px;
-  text-align: left;
-  z-index: 1000;
   box-shadow: 0px 2px 8px rgb(0, 0, 0, 0.1);
+
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+  text-align: left;
+
+  z-index: 1000;
 }
 
-.dropDownItem {
-  font-size: 0.9rem;
-  margin: 0.3rem 0rem;
-  padding: 0.5rem 0.2rem;
+.dropDownOption1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  padding: 6px;
+  margin-top: 3px;
+
+  border-radius: 10px;
+}
+
+.dropDownOption1:hover {
+  background-color: #424242;
+}
+
+.upgradeDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 10px 0 6px;
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+
+  background-color: #212121;
+
   cursor: pointer;
 }
 
-.dropDownItem:hover {
-  background-color: rgba(180, 180, 180, 0.1);
-  border-radius: 6px;
+.upgradeDiv:hover {
+  background-color: #323232;
+}
+
+.dropDownOption2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+
+  padding: 8px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+
+  border-radius: 10px;
+}
+
+.dropDownOption2:hover {
+  background-color: #424242;
+}
+
+/* 2. Profile Drop Down */
+.dropDownMenuItem {
+  padding: 12px;
+
+  border-radius: 12px;
+
+  margin: 2px;
+}
+
+.dropDownMenuItem:hover {
+  background-color: #424242;
 }

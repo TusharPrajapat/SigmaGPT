@@ -84,9 +84,11 @@
 .loginBtn {
   display: flex;
   justify-content: center;
-  /* text-align: center; */
+  align-items: center;
+
   width: 88%;
   height: 50px;
+
   border-radius: 35px;
 
   color: black;

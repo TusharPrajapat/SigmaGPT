@@ -3,7 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import Groq from "groq-sdk";
 import mongoose from "mongoose";
-import chatRoutes from "./routes/chart.js";
+import chatRoutes from "./routes/chat.js";
 import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 
@@ -16,7 +16,7 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
 
 app.use("/api/auth", authRoutes);
