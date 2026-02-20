@@ -33,9 +33,14 @@ function App() {
   };
 
   //while checking auth
-  if (isAuthenticated === null) {
-    return <p>Loading...</p>;
-  }
+  // if (isAuthenticated === null) {
+  //   return (
+  //     <div className="container" style={{}}>
+  //       <h1>Welcome To SigmaGPT</h1>
+  //       <p>Please wait while this app is loading...</p>
+  //     </div>
+  //   );
+  // }
 
   // not logged in
   if (!isAuthenticated) {
